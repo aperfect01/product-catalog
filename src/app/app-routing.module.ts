@@ -12,6 +12,13 @@ const routes: Routes = [
     loadComponent: () =>
       import('./pages/home/home.page').then((m) => m.HomePage),
   },
+  {
+    path: 'product/:id',
+    loadComponent: () =>
+      import('./pages/product-details/product-details.page').then(
+        (m) => m.ProductDetailsPage
+      ),
+  },
 ];
 
 @NgModule({
