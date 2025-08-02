@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Product Catalog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionInput)="onSearchChange()"
+  ></ion-searchbar>
+
+  <ion-button expand="block" (click)="toggleSortOrder()">
+    Sort by Price ({{ sortOrder === 'asc' ? 'Low to High' : 'High to Low' }})
+  </ion-button>
+
+  <ion-list>
+    <app-product-card
+      *ngFor="let product of filteredProducts"
+      [product]="product"
+      (click)="goToDetails(product)"
+    >
+    </app-product-card>
+  </ion-list>
+</ion-content>
