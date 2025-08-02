@@ -1,11 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ product?.name }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+      <!-- Back button -->
+    </ion-buttons>
+    <ion-title>{{ product?.name || 'Product Details' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="product">
-  <ion-card>
+<ion-content>
+  <!-- Loading Spinner -->
+  <ion-spinner
+    *ngIf="isLoading"
+    name="crescent"
+    class="ion-margin"
+  ></ion-spinner>
+
+  <!-- Product Card -->
+  <ion-card *ngIf="product && !isLoading">
     <ion-card-header>
       <ion-card-title>{{ product.name }}</ion-card-title>
       <ion-card-subtitle>\${{ product.price }}</ion-card-subtitle>
@@ -15,4 +27,11 @@
       <p *ngIf="product.discount > 0">Discount: {{ product.discount }}%</p>
     </ion-card-content>
   </ion-card>
+
+  <!-- Error Message -->
+  <div *ngIf="!product && !isLoading" class="ion-padding">
+    <ion-text color="danger">
+      <h2>Product not found.</h2>
+    </ion-text>
+  </div>
 </ion-content>

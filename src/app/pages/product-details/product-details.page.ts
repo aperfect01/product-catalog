@@ -15,6 +15,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductDetailsPage implements OnInit {
   product?: Product;
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,8 +24,15 @@ export class ProductDetailsPage implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productService.getProducts().subscribe((products) => {
-      this.product = products.find((p) => p.id === id);
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.product = products.find((p) => p.id === id);
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.product = undefined;
+      },
     });
   }
 }

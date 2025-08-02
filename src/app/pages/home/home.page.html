@@ -5,21 +5,27 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar
-    [(ngModel)]="searchTerm"
-    (ionInput)="onSearchChange()"
-  ></ion-searchbar>
+  <!-- Loading spinner -->
+  <ion-spinner *ngIf="isLoading" name="crescent" class="ion-margin"></ion-spinner>
 
-  <ion-button expand="block" (click)="toggleSortOrder()">
-    Sort by Price ({{ sortOrder === 'asc' ? 'Low to High' : 'High to Low' }})
-  </ion-button>
+  <!-- Main content only if not loading -->
+  <div *ngIf="!isLoading">
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange()"
+    ></ion-searchbar>
 
-  <ion-list>
-    <app-product-card
-      *ngFor="let product of filteredProducts"
-      [product]="product"
-      (click)="goToDetails(product)"
-    >
-    </app-product-card>
-  </ion-list>
+    <ion-button expand="block" (click)="toggleSortOrder()">
+      Sort by Price ({{ sortOrder === 'asc' ? 'Low to High' : 'High to Low' }})
+    </ion-button>
+
+    <ion-list>
+      <app-product-card
+        *ngFor="let product of filteredProducts"
+        [product]="product"
+        (click)="goToDetails(product)"
+      >
+      </app-product-card>
+    </ion-list>
+  </div>
 </ion-content>

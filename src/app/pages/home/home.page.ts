@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   filteredProducts: Product[] = [];
   searchTerm = '';
   sortOrder: 'asc' | 'desc' = 'asc';
+  isLoading = true;
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -26,11 +27,13 @@ export class HomePage implements OnInit {
     this.productService.getProducts().subscribe({
       next: (data) => {
         this.products = data;
-        console.log(this.products, 'asdsadsadsa');
-
         this.applyFilter();
+        this.isLoading = false;
       },
-      error: () => alert('Could not load products'),
+      error: () => {
+        alert('Could not load products');
+        this.isLoading = false;
+      },
     });
   }
 
